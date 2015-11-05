@@ -3,8 +3,8 @@ import org.json.*;
 
 public class JSON {
 	
-	JSONObject o;
-	JSONArray a;
+	public JSONObject Object;
+	public JSONArray Array;
 	
 	
 	public void makeJSONObject(String name,Object value ) throws JSONException{
@@ -28,19 +28,19 @@ public class JSON {
 	}
 	
 	public void setJSONObject(JSONObject object){
-		o=object;
+		Object=object;
 	}
 	
 	public void setJSONArray(JSONArray array){
-		a=array;
+		Array=array;
 	}
 	
 	public JSONObject getJSONObject(){
-		return o;
+		return Object;
 	}
 	
 	public JSONArray getJSONArray(){
-		return a;
+		return Array;
 	}
 
 }
