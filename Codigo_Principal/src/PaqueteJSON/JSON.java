@@ -11,8 +11,8 @@ public class JSON {
 	/**
 	 * Atributos de la clase JSON
 	 */
-	public JSONObject Object;
-	public JSONArray Array;
+	protected JSONObject Object;
+	protected JSONArray Array;
 	
 	/**
 	 * Recive un String con el nomnbre del key y un objeto para su asignar su valor

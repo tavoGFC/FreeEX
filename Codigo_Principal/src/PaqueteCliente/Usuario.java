@@ -1,6 +1,9 @@
 package PaqueteCliente;
+
 import org.json.JSONException;
 
+
+import PaqueteGrafosMatriz.*;
 import PaqueteJSON.*;
 
 /**
@@ -9,25 +12,32 @@ import PaqueteJSON.*;
  *
  */
 
-public class Cliente extends JSON{
+public class Usuario extends JSON{
+	/**
+	 * Atributos de la clase Cliente
+	 */
+	protected String correo;
+	protected String ubicacion;
+	protected String nombre;
+	protected String mensaje;
+	protected String mensajeEntrada;
+	protected GrafoMatriz grafo;
+	
 	
 	/**
 	 * Constructor de la clase Cliente
 	 * @param usuario
 	 * @throws JSONException
 	 */
-	public Cliente(String usuario) throws JSONException {
+	public Usuario(String correo,String nUsuario,GrafoMatriz grafo) throws JSONException {
 		super();
-		this.usuario = usuario;
-		this.makeJSONObject("usuario", usuario);
+		this.correo = correo;
+		this.nombre = nUsuario;
+		this.setGrafo(grafo);
+		this.makeJSONObject("usuario", nUsuario);
+		this.getGrafo().nuevoVertice(getCorreoElectronico());
+		
 	}
-	
-	/**
-	 * Atributos de la clase Cliente
-	 */
-	public String ubicacion;
-	public String usuario;
-	public String mensaje;
 	
 	/**
 	 * Recive un String, permite redactar el mensaje que va a ser recibido
@@ -36,7 +46,7 @@ public class Cliente extends JSON{
 	 */
 	public void redactarMensaje(String msj) throws JSONException{
 		this.setMensaje(msj);
-		this.makeJSONObject(this.usuario,this.mensaje);
+		this.makeJSONObject(this.nombre,this.mensaje);
 		System.out.println(this.Object);
 	}
 	
@@ -61,11 +71,21 @@ public class Cliente extends JSON{
 		this.redactarMensaje(mensaje);
 	}
 	
+	public void run(){
+		while (true){
+			
+		}
+	}
+	
 	/**
 	 * Inicio de la seccion de getters
 	 */
-	public String getUsername(){
-		return usuario;
+	public String getNombreUsuario(){
+		return nombre;
+	}
+	
+	public String getCorreoElectronico(){
+		return correo;
 	}
 	
 	public String getMensaje(){
@@ -74,6 +94,9 @@ public class Cliente extends JSON{
 
 	public String getUbicacion() {
 		return ubicacion;
+	}
+	public GrafoMatriz getGrafo() {
+		return this.grafo;
 	}
 	/**
 	 * Fin de la seccion de getters
@@ -84,6 +107,9 @@ public class Cliente extends JSON{
 	 */
 	public void setUbicacion(String ubicacion) {
 		this.ubicacion = ubicacion;
+	}
+	public void setGrafo(GrafoMatriz grafo) {
+		this.grafo= grafo;
 	}
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;

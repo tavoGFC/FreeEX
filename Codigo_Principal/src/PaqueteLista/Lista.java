@@ -63,20 +63,14 @@ public class Lista {
 	 * @param ele Es el objeto que se va a utilizar para coprobar y realizar el contador cuando el elemento del nodo claza con el buscado
 	 * @return la cantidad de elementos del tipo del objeto que fue buscado
 	 */
-	public int CantObj(Object ele){
+	public int CantObj(){
 		Nodo temp;
 		temp=head;
 		int i=0;
 		while (temp!=null){
-			if (!temp.ele.getClass().equals(ele.getClass())){
-				temp=temp.sig;
-			}
-			else{
 				i=i+1;
 				temp=temp.sig;
-			}
 		}
-		System.out.println("se encuentran " + i + " del elemento buscado");
 		return i;
 	}
 	/**

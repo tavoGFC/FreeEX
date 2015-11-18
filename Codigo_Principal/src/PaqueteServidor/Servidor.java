@@ -1,5 +1,5 @@
 package PaqueteServidor;
 
-public class Servidor {
-
+public class Servidor{
+	
 }
