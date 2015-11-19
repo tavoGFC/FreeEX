@@ -1,11 +1,11 @@
-package PaqueteGrafosMatriz;
+package PaqueteEstructras;
 
 import org.json.JSONException;
 
 import PaqueteCliente.Usuario;
 
 public class prieba {
-	public static void main(String[] args) throws JSONException {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		GrafoMatriz g = new GrafoMatriz();
 		Usuario c = new Usuario("pedro@hotmail.com","pedro",g);

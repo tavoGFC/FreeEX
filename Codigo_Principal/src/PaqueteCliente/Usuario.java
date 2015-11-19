@@ -2,8 +2,7 @@ package PaqueteCliente;
 
 import org.json.JSONException;
 
-
-import PaqueteGrafosMatriz.*;
+import PaqueteEstructras.*;
 import PaqueteJSON.*;
 
 /**
@@ -27,16 +26,15 @@ public class Usuario extends JSON{
 	/**
 	 * Constructor de la clase Cliente
 	 * @param usuario
-	 * @throws JSONException
+	 * @throws Exception 
 	 */
-	public Usuario(String correo,String nUsuario,GrafoMatriz grafo) throws JSONException {
+	public Usuario(String correo,String nUsuario,GrafoMatriz grafo) throws Exception {
 		super();
 		this.correo = correo;
 		this.nombre = nUsuario;
 		this.setGrafo(grafo);
 		this.makeJSONObject("usuario", nUsuario);
 		this.getGrafo().nuevoVertice(getCorreoElectronico());
-		
 	}
 	
 	/**
@@ -69,12 +67,6 @@ public class Usuario extends JSON{
 	 */
 	public void mensajeDifusion(String mensaje) throws JSONException{
 		this.redactarMensaje(mensaje);
-	}
-	
-	public void run(){
-		while (true){
-			
-		}
 	}
 	
 	/**

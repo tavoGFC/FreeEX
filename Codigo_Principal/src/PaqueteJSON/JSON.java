@@ -15,7 +15,7 @@ public class JSON {
 	protected JSONArray Array;
 	
 	/**
-	 * Recive un String con el nomnbre del key y un objeto para su asignar su valor
+	 * Recibe un String con el nomnbre del key y un objeto para su asignar su valor
 	 * @param name
 	 * @param value
 	 * @throws JSONException
@@ -26,7 +26,7 @@ public class JSON {
 		this.setJSONObject(obj);
 	}
 	/**
-	 * Recive un objeto JSON,un String con el nomnbre del key y un objeto para su asignar su valor
+	 * Recibe un objeto JSON,un String con el nomnbre del key y un objeto para su asignar su valor
 	 * y añade el nuevo key al objeto ya creado
 	 * @param object
 	 * @param name
@@ -37,7 +37,7 @@ public class JSON {
 		object.put(name, value);
 	}
 	/**
-	 * Recive un objeto JSON y lo agrega al Arreglo JSON
+	 * Recibe un objeto JSON y lo agrega al Arreglo JSON
 	 * @param object
 	 */
 	public void makeJSONArray(JSONObject object){
@@ -47,7 +47,7 @@ public class JSON {
 	}
 	
 	/**
-	 * Recive un arreglo JSON, un objeto JSON y lo agrega al Arreglo JSON
+	 * Recibe un arreglo JSON, un objeto JSON y lo agrega al Arreglo JSON
 	 * @param array
 	 * @param object
 	 */
