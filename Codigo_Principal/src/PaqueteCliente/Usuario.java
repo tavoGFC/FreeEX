@@ -16,7 +16,7 @@ public class Usuario extends JSON{
 	 * Atributos de la clase Cliente
 	 */
 	protected String correo;
-	protected int ubicacion=12;
+	protected int ubicacion;
 	protected String nombre;
 	protected String mensaje;
 	protected String mensajeEntrada;
