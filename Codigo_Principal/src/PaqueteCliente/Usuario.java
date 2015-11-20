@@ -16,11 +16,12 @@ public class Usuario extends JSON{
 	 * Atributos de la clase Cliente
 	 */
 	protected String correo;
-	protected String ubicacion;
+	protected int ubicacion=12;
 	protected String nombre;
 	protected String mensaje;
 	protected String mensajeEntrada;
 	protected GrafoMatriz grafo;
+	protected GrafMatPeso gp;
 	
 	
 	/**
@@ -28,13 +29,38 @@ public class Usuario extends JSON{
 	 * @param usuario
 	 * @throws Exception 
 	 */
-	public Usuario(String correo,String nUsuario,GrafoMatriz grafo) throws Exception {
+	public Usuario(String correo,String nUsuario,GrafMatPeso grafo) throws Exception {
 		super();
 		this.correo = correo;
 		this.nombre = nUsuario;
-		this.setGrafo(grafo);
+		this.setUbicacion(ubicacion);
+		this.setGrafP(grafo);
 		this.makeJSONObject("usuario", nUsuario);
-		this.getGrafo().nuevoVertice(getCorreoElectronico());
+		if (this.getGrafP().cuentaNull(grafo)==this.getGrafP().largo()){
+			this.getGrafP().setKey(0, this.getCorreoElectronico());
+			this.getGrafP().nuevoArco(0,0,0);
+
+		}
+		else{
+			this.getGrafP().setKey(this.getGrafP().cuentaVert(gp), this.getCorreoElectronico());
+
+		}
+		for(int i=0;i<this.getGrafP().cuentaNull(grafo);i++){
+			if (this.getGrafP().getKey(i)==null){
+				;
+			}
+			else if(i==this.getGrafP().cuentaVert(grafo)){
+				this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(grafo),this.getGrafP().cuentaVert(grafo), 0);
+			}
+
+			else{
+				this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(grafo), i, 12);
+				this.getGrafP().nuevoArco(0, i+1, 12);
+				this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(grafo)-1, i, 12);
+			}
+		}
+		System.out.println("fuera del ciclo");
+//		this.getGrafo().nuevoVertice(getCorreoElectronico());
 	}
 	
 	/**
@@ -84,11 +110,14 @@ public class Usuario extends JSON{
 		return mensaje;
 	}
 
-	public String getUbicacion() {
+	public int getUbicacion() {
 		return ubicacion;
 	}
 	public GrafoMatriz getGrafo() {
 		return this.grafo;
+	}
+	public GrafMatPeso getGrafP() {
+		return this.gp;
 	}
 	/**
 	 * Fin de la seccion de getters
@@ -97,11 +126,14 @@ public class Usuario extends JSON{
 	/**
 	 * Inicio de la seccion de setters
 	 */
-	public void setUbicacion(String ubicacion) {
+	public void setUbicacion(int ubicacion) {
 		this.ubicacion = ubicacion;
 	}
 	public void setGrafo(GrafoMatriz grafo) {
 		this.grafo= grafo;
+	}
+	public void setGrafP(GrafMatPeso gp) {
+		this.gp= gp;
 	}
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;

@@ -66,7 +66,7 @@ public class JSON {
 		this.Array=array;
 	}
 	/**
-	 * Fin de la seccion de getters
+	 * Fin de la seccion de setters
 	 */
 	
 	/**

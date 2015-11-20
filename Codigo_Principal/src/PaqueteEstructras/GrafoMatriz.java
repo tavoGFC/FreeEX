@@ -61,16 +61,16 @@ public class GrafoMatriz {
 		return (i < numVerts) ? i : -1 ; 
 	} 
 	
-//	/**
-//	 * Recive strings con los indetificadores de los vertices y crea el arco entre ellos
-//	 */
-//	public void nuevoArco(String a, int b)throws Exception { 
-//		int va;
-//		va = numVertice(a);
-//		if (va < 0 || b < 0) throw new Exception("Vértice no existe");
-//		matAd[va][b] = 1; 
-//	}
-//	
+	/**
+	 * Recive strings con los indetificadores de los vertices y crea el arco entre ellos
+	 */
+	public void nuevoArco(String a, int b)throws Exception { 
+		int va;
+		va = numVertice(a);
+		if (va < 0 || b < 0) throw new Exception("Vértice no existe");
+		matAd[va][b] = 1; 
+	}
+	
 	/**
 	 * Recive dos strings con los indetificadores de los vertices y dice si hay una relacion entre ellos
 	 * @param a
