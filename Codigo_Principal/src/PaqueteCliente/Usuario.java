@@ -29,6 +29,17 @@ public class Usuario extends JSON{
 	 * @param usuario
 	 * @throws Exception 
 	 */
+	
+	public Usuario(String correo,String nUsuario,GrafoMatriz grafo) throws Exception {
+ 		super();
+ 		this.correo = correo;
+ 		this.nombre = nUsuario;
+ 		this.setGrafo(grafo);
+ 		this.makeJSONObject("usuario", nUsuario);
+ 		this.getGrafo().nuevoVertice(getCorreoElectronico());
+		
+ 	}
+ 	
 	public Usuario(String correo,String nUsuario,GrafMatPeso grafo) throws Exception {
 		super();
 		this.correo = correo;
