@@ -3,5 +3,13 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix/certpath-api-compat.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix/cryptix-message-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix/cryptix-openpgp-provider.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix/cryptix-pki-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix jce/bin/cryptix-jce-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix jce/bin/cryptix-jce-compat.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix jce/bin/cryptix-jce-provider.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernanda/Desktop/criptix jce/bin/cryptix-jce-tests.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
