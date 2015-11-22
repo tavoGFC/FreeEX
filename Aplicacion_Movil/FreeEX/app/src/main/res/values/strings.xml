@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FreeEX</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_conectando">Conectando</string>
+    <string name="title_activity_ingresar">Ingresar</string>
+    <string name="title_activity_enviar_mensajes">EnviarMensajes</string>
+    <string name="title_activity_conversacion_uno_auno">ConversacionUnoAUno</string>
+</resources>
