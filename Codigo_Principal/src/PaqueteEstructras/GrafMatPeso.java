@@ -163,35 +163,4 @@ public class GrafMatPeso {
           System.out.println ();
        }
     }
-	 
-    public static void main (String args[]) throws Exception {
-       final GrafMatPeso t = new GrafMatPeso (6);
-//     	 t.print();
-//       	 Usuario a = new Usuario("a","a1",t);
-//       	 Usuario b = new Usuario("b","b1",t);
-//       	 Usuario c = new Usuario("c","c1",t);
-//
-//       	 System.out.println(t.cuentaVert(t));
-//       	 t.print();
-       t.setKey (0, "v0");
-       t.setKey (1, "v1");
-       t.setKey (2, "v2");
-       t.setKey (3, "v3");
-       t.setKey (4, "v4");
-       t.setKey (5, "v5");
-       t.nuevoArco (0,1,2);
-       t.nuevoArco (0,5,9);
-       t.nuevoArco (1,2,8);
-       t.nuevoArco (1,3,15);
-       t.nuevoArco (1,5,6);
-       t.nuevoArco (2,3,1);
-       t.nuevoArco (4,3,3);
-       t.nuevoArco (4,2,7);
-       t.nuevoArco (5,4,3);
-       t.print();
- 
-       final int [] pred = Dijkstra.dijkstra (t, 0);
-       for (int n=0; n<6; n++) {          Dijkstra.printPath (t, pred, 0, n);
-       }
-	 } 
 }

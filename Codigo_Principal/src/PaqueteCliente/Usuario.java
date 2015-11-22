@@ -1,7 +1,6 @@
 package PaqueteCliente;
 
 import org.json.JSONException;
-
 import PaqueteEstructras.*;
 import PaqueteJSON.*;
 
@@ -35,43 +34,42 @@ public class Usuario extends JSON{
  		this.correo = correo;
  		this.nombre = nUsuario;
  		this.setGrafo(grafo);
- 		this.makeJSONObject("usuario", nUsuario);
+ 		this.makeJSONObject("Usuario", nUsuario);
  		this.getGrafo().nuevoVertice(getCorreoElectronico());
 		
  	}
  	
 	public Usuario(String correo,String nUsuario,GrafMatPeso grafo) throws Exception {
 		super();
-		this.correo = correo;
-		this.nombre = nUsuario;
-		this.setUbicacion(ubicacion);
 		this.setGrafP(grafo);
-		this.makeJSONObject("usuario", nUsuario);
-		if (this.getGrafP().cuentaNull(grafo)==this.getGrafP().largo()){
-			this.getGrafP().setKey(0, this.getCorreoElectronico());
-			this.getGrafP().nuevoArco(0,0,0);
-
+		if (this.getGrafP().cuentaVert(this.getGrafP())<this.getGrafP().getMaxV()){
+			this.correo = correo;
+			this.nombre = nUsuario;
+			this.setUbicacion(ubicacion);
+			this.makeJSONObject("usuario", nUsuario);
+			this.AddtoJSONObject(this.getJSONObject(), "Correo", this.getCorreoElectronico());
+			if (this.getGrafP().cuentaNull(grafo)==this.getGrafP().largo()){
+				this.getGrafP().setKey(0, this.getCorreoElectronico());
+				this.getGrafP().nuevoArco(0, 0, 0);
+				for (int i=1;i<this.getGrafP().getMaxV();i++){
+					this.getGrafP().nuevoArco(0, i, 12);
+				}
+			}
+			else{
+				this.getGrafP().setKey(this.getGrafP().cuentaVert(this.getGrafP()), this.getCorreoElectronico());
+				for (int i=0;i<this.getGrafP().getMaxV();i++){
+					if(i==this.getGrafP().cuentaVert(this.getGrafP())-1){
+						this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(this.getGrafP())-1, i, 0);
+					}
+					else{
+						this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(this.getGrafP())-1, i, 12);
+					}
+				}
+			}
 		}
 		else{
-			this.getGrafP().setKey(this.getGrafP().cuentaVert(gp), this.getCorreoElectronico());
-
+			System.out.println("No se puede agregar mas usuarios a la conversacion");
 		}
-		for(int i=0;i<this.getGrafP().cuentaNull(grafo);i++){
-			if (this.getGrafP().getKey(i)==null){
-				;
-			}
-			else if(i==this.getGrafP().cuentaVert(grafo)){
-				this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(grafo),this.getGrafP().cuentaVert(grafo), 0);
-			}
-
-			else{
-				this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(grafo), i, 12);
-				this.getGrafP().nuevoArco(0, i+1, 12);
-				this.getGrafP().nuevoArco(this.getGrafP().cuentaVert(grafo)-1, i, 12);
-			}
-		}
-		System.out.println("fuera del ciclo");
-//		this.getGrafo().nuevoVertice(getCorreoElectronico());
 	}
 	
 	/**

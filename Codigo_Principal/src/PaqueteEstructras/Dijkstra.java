@@ -70,12 +70,12 @@ public class Dijkstra {
      * @param s
      * @param e
      */
-    public static void printPath (GrafMatPeso G, int [] pred, int s, int e) {
+    public static void printPath (GrafMatPeso G, int [] ant, int s, int e) {
        final java.util.ArrayList path = new java.util.ArrayList();
        int x = e;
        while (x!=s) {
           path.add (0, G.getKey(x));
-          x = pred[x];
+          x = ant[x];
        }
        path.add (0, G.getKey(s));
        System.out.println (path);
