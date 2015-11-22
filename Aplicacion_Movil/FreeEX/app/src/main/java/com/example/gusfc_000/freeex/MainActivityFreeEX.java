@@ -2,23 +2,13 @@ package com.example.gusfc_000.freeex;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothProfile;
-import android.bluetooth.BluetoothServerSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.hardware.camera2.params.BlackLevelPattern;
 import android.os.Handler;
 import android.os.Message;
-import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +30,6 @@ import com.example.gusfc_000.freeex.conexionBluetooth.ConnectionThread;
 import com.example.gusfc_000.freeex.conexionBluetooth.ShowDevices;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -62,11 +51,15 @@ public class MainActivityFreeEX extends AppCompatActivity {
     TextView textEstado;
 
     //usuario
-    TextView nombreUsuario;
-    TextView correo;
-    TextView contreseña;
+    EditText nombreUsuario;
+    EditText correo;
+    EditText contreseña;
 
-    String correoAEnviar;
+    EditText emailCorreo;
+    EditText asuntoCorreo;
+    EditText mensajeCorreo;
+
+    String desdeEmail;
     String contraseñaDeCorreo;
     String stringNombreUsuario;
 
@@ -103,6 +96,8 @@ public class MainActivityFreeEX extends AppCompatActivity {
     boolean enMenu = true;
     boolean enIngresar = false;
     boolean enConectando = false;
+    boolean enConversacion = false;
+    boolean enEnviarMensaje = false;
 
 
     //obtner el posicionamiento del dispositivo
@@ -123,7 +118,7 @@ public class MainActivityFreeEX extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity_free_ex);
-
+        System.out.println(enMenu);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
             Toast.makeText(getApplicationContext(), "Bluetooth no es soportado", Toast.LENGTH_LONG).show();
@@ -160,61 +155,71 @@ public class MainActivityFreeEX extends AppCompatActivity {
         setContentView(R.layout.activity_ingresar);
         enMenu = false;
         enIngresar = true;
-        enConectando = false;
 
-        nombreUsuario = (TextView) findViewById(R.id.textNombre);
-        correo = (TextView) findViewById(R.id.textCorreo);
-        contreseña = (TextView) findViewById(R.id.textContraseña);
+
+        nombreUsuario = (EditText) findViewById(R.id.textNombre);
+        correo = (EditText) findViewById(R.id.textCorreo);
+        contreseña = (EditText) findViewById(R.id.textContraseña);
+
 
     }
 
     public void onClickSiguiente(View view) {
-        correoAEnviar = correo.getText().toString();
+        desdeEmail = correo.getText().toString();
         contraseñaDeCorreo = contreseña.getText().toString();
         stringNombreUsuario = nombreUsuario.getText().toString();
 
-        textEstado = (TextView) findViewById(R.id.textEstado);
-
-        textBaseStationInfo = (TextView) findViewById(R.id.textViewInfo);
-
-        setContentView(R.layout.activity_conectando);
-        enMenu = false;
-        enIngresar = false;
-        enConectando = true;
-
-        buttonActivarBluetooth = (Switch) findViewById(R.id.switchAB);
-        buttonActivarBluetooth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if (!bluetoothAdapter.isEnabled()) {
-                        Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        Intent visibleBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                        visibleBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-                        startActivityForResult(visibleBluetooth, REQUEST_ENABLE_BT);
-                        startActivityForResult(enableBluetooth, REQUEST_ENABLE_BT);
-                        Toast.makeText(getApplicationContext(), "Activando bluetooth", Toast.LENGTH_SHORT).show();
-
-                        while (isChecked) {
-                            if (bluetoothAdapter.isEnabled()) {
-                                startBaseS();
-                                baseStationMode = true;
-                                break;
-                            } else {
-                                isChecked = true;
-                            }
-
-                        }
-
-
-                    }
-                } else {
-                    bluetoothAdapter.disable();
-                    Toast.makeText(getApplicationContext(), "Desactivando bluetooth", Toast.LENGTH_SHORT).show();
+        if (desdeEmail.isEmpty() || contraseñaDeCorreo.isEmpty()){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivityFreeEX.this);
+            alertDialog.setTitle("Error en ingresar datos");
+            alertDialog.setMessage("Por favor ingrese un correo y contraseña" + "\n" + "tienene que ser del servidor Gmail");
+            alertDialog.setPositiveButton("Volver", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
                 }
-            }
-        });
+            });
+            alertDialog.show();
+        }else {
+            textEstado = (TextView) findViewById(R.id.textEstado);
 
+            textBaseStationInfo = (TextView) findViewById(R.id.textViewInfo);
+
+            setContentView(R.layout.activity_conectando);
+            enIngresar = false;
+            enConectando = true;
+
+            buttonActivarBluetooth = (Switch) findViewById(R.id.switchAB);
+            buttonActivarBluetooth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        if (!bluetoothAdapter.isEnabled()) {
+                            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            Intent visibleBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+                            visibleBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+                            startActivityForResult(visibleBluetooth, REQUEST_ENABLE_BT);
+                            startActivityForResult(enableBluetooth, REQUEST_ENABLE_BT);
+                            Toast.makeText(getApplicationContext(), "Activando bluetooth", Toast.LENGTH_SHORT).show();
+
+                            while (isChecked) {
+                                if (bluetoothAdapter.isEnabled()) {
+                                    startBaseS();
+                                    baseStationMode = true;
+                                    break;
+                                } else {
+                                    isChecked = true;
+                                }
+
+                            }
+                        }
+                    } else {
+                        bluetoothAdapter.disable();
+                        Toast.makeText(getApplicationContext(), "Desactivando bluetooth", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
 
     }
 
@@ -249,7 +254,7 @@ public class MainActivityFreeEX extends AppCompatActivity {
 //        ArrayList<BluetoothDevice> pairedDevicesString = new ArrayList<BluetoothDevice>();
 //        if (pairedDevices.size() > 0) {
 //            for (BluetoothDevice device : pairedDevices) {
-//                //usuario = new Usuario(correoAEnviar,stringNombreUsuario,getGrafMatPeso());
+//                //usuario = new Usuario(desdeEmail,stringNombreUsuario,getGrafMatPeso());
 //                pairedDevicesString.add(device);
 //            }
 //        }
@@ -314,7 +319,7 @@ public class MainActivityFreeEX extends AppCompatActivity {
         ArrayList<BluetoothDevice> pairedDevicesString = new ArrayList<BluetoothDevice>();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                //usuario = new Usuario(correoAEnviar,stringNombreUsuario,getGrafMatPeso());
+                //usuario = new Usuario(desdeEmail,stringNombreUsuario,getGrafMatPeso());
                 pairedDevicesString.add(device);
             }
         }
@@ -352,15 +357,46 @@ public class MainActivityFreeEX extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 BluetoothDevice device = (BluetoothDevice) parent.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), "Nombre: " + device.getName(), Toast.LENGTH_SHORT).show();
+                enviarCorreo();
                 return true;
             }
         });
 
     }
 
+    public void enviarCorreo(){
+        enConversacion = false;
+        enEnviarMensaje = true;
+        setContentView(R.layout.activity_enviar_mensajes);
+
+        emailCorreo = (EditText)findViewById(R.id.editTextCorreo);
+        asuntoCorreo = (EditText)findViewById(R.id.editTextAsunto);
+        mensajeCorreo = (EditText)findViewById(R.id.editTextMensaje);
+
+    }
+
+    public void onClickEnviarCorreo(View view){
+        sendEmail();
+    }
+
+
+    private void sendEmail() {
+        //Getting content for email
+        String email = emailCorreo.getText().toString().trim();
+        String subject = "Mensaje enviado desde FreeEx " + asuntoCorreo.getText().toString().trim();
+        String message = mensajeCorreo.getText().toString().trim();
+
+        //Creating SendMail object
+        SendMail sm = new SendMail(this, desdeEmail, contraseñaDeCorreo, email, subject, message);
+
+        //Executing sendmail to send email
+        sm.execute();
+    }
+
 
     public void conversacionUnoAUno(){
+        enConectando = false;
+        enConversacion = true;
         setContentView(R.layout.activity_conversacion_uno_auno);
         textoEnviado = (TextView)findViewById(R.id.textViewMensajeRecivido);
         inputText = (EditText)findViewById(R.id.editTextMensaje);
@@ -373,21 +409,14 @@ public class MainActivityFreeEX extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Ingrese un mensaje para enviar", Toast.LENGTH_SHORT).show();
                     }
                     byte[] bytesToSend = inputText.getText().toString().getBytes();
-                    //textoEnviado.setText(data);
                     connectionThread.write(bytesToSend);
-                    //textoEnviado.setText(data);
-//                        try {
-//                            usuario.mensajeUnoAUno(stringNombreUsuario, inputText.getText().toString());
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-
-
                 }
             }
         });
 
     }
+
+
 
 
     public void onClickMostrarU(View view) {
@@ -428,11 +457,17 @@ public class MainActivityFreeEX extends AppCompatActivity {
     public void onBackPressed(){
         if(enIngresar){
             setContentView(R.layout.activity_main_activity_free_ex);
+            //enMenu = true;
         }
         if(enConectando){
             setContentView(R.layout.activity_ingresar);
-            enIngresar = true;
-            enConectando = false;
+
+        }
+        if(enConversacion){
+            setContentView(R.layout.activity_conectando);
+        }
+        if(enEnviarMensaje){
+            setContentView(R.layout.activity_conectando);
         }
         if(enMenu){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivityFreeEX.this);

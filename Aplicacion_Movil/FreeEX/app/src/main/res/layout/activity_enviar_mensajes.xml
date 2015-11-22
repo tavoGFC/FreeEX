@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.gusfc_000.freeex.EnviarMensajes">
+    tools:context="com.example.gusfc_000.freeex.EnviarMensajes"
+    android:background="#001419">
 
     <EditText
         android:layout_width="wrap_content"
@@ -13,7 +14,8 @@
         android:ems="10"
         android:id="@+id/editTextCorreo"
         android:hint="Correo Electronio"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#0e8f90" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,10 +24,10 @@
         android:id="@+id/textViewPara"
         android:layout_alignTop="@+id/editTextCorreo"
         android:layout_toLeftOf="@+id/editTextCorreo"
-        android:layout_alignBottom="@+id/editTextCorreo"
 
-        android:textColor="#010101"
-        android:textSize="25sp" />
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:layout_above="@+id/textViewAsunto" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +36,7 @@
         android:id="@+id/textViewAsunto"
         android:layout_marginTop="45dp"
         android:textSize="25sp"
-        android:textColor="#010001"
+        android:textColor="#f2ffed"
         android:layout_below="@+id/editTextCorreo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -46,7 +48,8 @@
         android:layout_alignBottom="@+id/textViewAsunto"
         android:layout_toRightOf="@+id/textViewAsunto"
         android:layout_toEndOf="@+id/textViewAsunto"
-        android:hint="Ingrese el asunto del mensaje" />
+        android:hint="Ingrese el asunto del mensaje"
+        android:background="#0e8f90" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,7 +60,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="66dp"
-        android:textColor="#040404"
+        android:textColor="#ffffff"
         android:textSize="25sp" />
 
     <EditText
@@ -68,7 +71,8 @@
         android:layout_toEndOf="@+id/textViewMensaje"
         android:hint="Redacte el mensaje que desea enviar"
         android:layout_toRightOf="@+id/textViewMensaje"
-        android:layout_above="@+id/buttonEnviarCorreo" />
+        android:layout_above="@+id/buttonEnviarCorreo"
+        android:background="#0e8f90" />
 
     <Button
         android:layout_width="wrap_content"
@@ -76,7 +80,10 @@
         android:id="@+id/buttonEnviarCorreo"
         android:layout_alignRight="@+id/editTextAsunto"
         android:layout_alignEnd="@+id/editTextAsunto"
-        android:background="@android:drawable/ic_menu_send"
-        android:layout_alignParentBottom="true" />
+        android:background="@android:drawable/ic_dialog_email"
+        android:layout_alignParentBottom="true"
+        android:onClick="onClickEnviarCorreo"
+        android:layout_toRightOf="@+id/editTextCorreo"
+        android:layout_toEndOf="@+id/editTextCorreo" />
 
 </RelativeLayout>
